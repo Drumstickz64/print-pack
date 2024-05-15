@@ -1,5 +1,5 @@
 {
-  "name": "print_pack",
+  "name": "print-pack",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Drumstickz64",
+  "license": "MIT",
   "dependencies": {
     "coherentpdf": "^2.5.5"
   }
