@@ -38,6 +38,7 @@ function main() {
     return doc;
   });
 
+  console.log("Creating output document...");
   const outDoc = cpdf.mergeSimple(docs);
 
   if (NORMALIZE_TO_A4) {
