@@ -22,17 +22,17 @@ function main() {
     const filePath = path.join(INPUT_DIR, file);
     const doc = cpdf.fromFile(filePath, "");
 
-    const numPages = cpdf.pages(doc);
-    if (numPages % 2 == 1) {
-      const lastPageRange = cpdf.range(numPages, numPages);
-      cpdf.padAfter(doc, lastPageRange);
-    }
-
     if (isPowerPoint(doc)) {
       console.info(
         `File '${file}' is likely a PowerPoint, its pages will be stacked`
       );
       stackSlides(doc);
+    }
+
+    const numPages = cpdf.pages(doc);
+    if (numPages % 2 == 1) {
+      const lastPageRange = cpdf.range(numPages, numPages);
+      cpdf.padAfter(doc, lastPageRange);
     }
 
     return doc;
