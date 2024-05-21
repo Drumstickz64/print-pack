@@ -40,7 +40,7 @@ function main() {
     });
 
   if (files.length == 0) {
-    console.warn(`WARNING: No pdf files found in the '${INPUT_DIR}' directory`);
+    console.warn(`WARNING: No files found in the '${INPUT_DIR}' directory`);
     displayExitPrompt(false);
     return;
   }

@@ -1,5 +1,4 @@
-*.pdf
-pdfs/*.pdf
+**/*.pdf
 
 # Logs
 logs
