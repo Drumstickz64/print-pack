@@ -45,7 +45,7 @@ function main() {
     return;
   }
 
-  const docs = files.map((file) => {
+  const docs = files.map((file, fileIndex) => {
     console.info(`INFO: Processing file: ${file}`);
 
     const filePath = path.join(INPUT_DIR, file);
@@ -59,10 +59,11 @@ function main() {
     }
 
     const numPages = cpdf.pages(doc);
-    if (numPages % 2 == 1) {
+    const isLastFile = fileIndex == files.length - 1;
+    if (numPages % 2 == 1 && !isLastFile) {
+      console.info(`INFO: Adding padding page to ${file}`);
       const lastPageRange = cpdf.range(numPages, numPages);
       cpdf.padAfter(doc, lastPageRange);
-      console.info(`INFO: Adding padding page to ${file}`);
     }
 
     return doc;
@@ -126,5 +127,5 @@ function displayExitPrompt(success) {
   } else {
     console.info("\nProcessing failed!");
   }
-  readline.question("\n\npress Enter to exit\n\n");
+  readline.question("\n\npress 'Enter' to exit\n\n");
 }
