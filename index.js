@@ -8,6 +8,7 @@ const OUT_FILE = "out.pdf";
 
 // Constants for configuring stacking behavior when dealing
 // with "PowerPoint" (pdfs with pages wider than they are tall)
+const STACKING_ENABLED = true;
 const STACKING_MARGIN = 40.0;
 const STACKING_SPACING = 25.0;
 const STACKING_LINEHEIGHT = 2.0;
@@ -18,13 +19,13 @@ try {
   main();
 } catch (err) {
   console.error("ERROR: an unexpected error happened: ", err);
-  displayExitPrompt(false);
+  displayFailedExitPrompt();
 }
 
 function main() {
   if (!fs.existsSync(path.join(__dirname, INPUT_DIR))) {
     console.error(`ERROR: '${INPUT_DIR}' directory not found`);
-    displayExitPrompt(false);
+    displayFailedExitPrompt();
     return;
   }
 
@@ -32,16 +33,16 @@ function main() {
     .readdirSync(path.join(__dirname, INPUT_DIR))
     .filter((file) => {
       if (path.extname(file) != ".pdf") {
-        console.warn(`WARNING: ${file} is not a pdf file, skipping`);
+        console.warn(`WARNING: ${file} is not a pdf file, it will be skipped`);
         return false;
       }
 
       return true;
     });
 
-  if (files.length == 0) {
+  if (files.length === 0) {
     console.warn(`WARNING: No pdf files found in the '${INPUT_DIR}' directory`);
-    displayExitPrompt(false);
+    displayFailedExitPrompt();
     return;
   }
 
@@ -51,7 +52,7 @@ function main() {
     const filePath = path.join(INPUT_DIR, file);
     const doc = cpdf.fromFile(filePath, "");
 
-    if (isPowerPoint(doc)) {
+    if (STACKING_ENABLED && isPowerPoint(doc)) {
       console.info(
         `INFO: File '${file}' is likely a PowerPoint, its pages will be stacked`
       );
@@ -88,7 +89,7 @@ function main() {
     cpdf.deletePdf(doc);
   }
 
-  displayExitPrompt(true);
+  displaySuccesfulExitPrompt();
 }
 
 function stackSlides(doc) {
@@ -121,11 +122,12 @@ function isPowerPoint(doc) {
   return true;
 }
 
-function displayExitPrompt(success) {
-  if (success) {
-    console.info("\nProcessing completed succesfully!");
-  } else {
-    console.info("\nProcessing failed!");
-  }
+function displaySuccesfulExitPrompt(success) {
+  console.info("\nProcessing completed succesfully!");
+  readline.question("\n\npress 'Enter' to exit\n\n");
+}
+
+function displayFailedExitPrompt(success) {
+  console.info("\nProcessing failed!");
   readline.question("\n\npress 'Enter' to exit\n\n");
 }
