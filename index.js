@@ -1,7 +1,6 @@
 const cpdf = require("coherentpdf");
 const fs = require("fs");
 const path = require("path");
-const readline = require("readline-sync");
 
 const INPUT_DIR = "input";
 const OUT_FILE = "out.pdf";
@@ -15,17 +14,11 @@ const STACKING_LINEHEIGHT = 2.0;
 
 const NORMALIZE_TO_A4 = true;
 
-try {
-  main();
-} catch (err) {
-  console.error("ERROR: an unexpected error happened: ", err);
-  displayFailedExitPrompt();
-}
+main();
 
 function main() {
   if (!fs.existsSync(path.join(__dirname, INPUT_DIR))) {
     console.error(`ERROR: '${INPUT_DIR}' directory not found`);
-    displayFailedExitPrompt();
     return;
   }
 
@@ -42,7 +35,6 @@ function main() {
 
   if (files.length === 0) {
     console.warn(`WARNING: No pdf files found in the '${INPUT_DIR}' directory`);
-    displayFailedExitPrompt();
     return;
   }
 
@@ -89,7 +81,7 @@ function main() {
     cpdf.deletePdf(doc);
   }
 
-  displaySuccesfulExitPrompt();
+  console.info("\nProcessing completed successfully!");
 }
 
 function stackSlides(doc) {
@@ -120,14 +112,4 @@ function isPowerPoint(doc) {
   }
 
   return true;
-}
-
-function displaySuccesfulExitPrompt(success) {
-  console.info("\nProcessing completed succesfully!");
-  readline.question("\n\npress 'Enter' to exit\n\n");
-}
-
-function displayFailedExitPrompt(success) {
-  console.info("\nProcessing failed!");
-  readline.question("\n\npress 'Enter' to exit\n\n");
 }

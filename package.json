@@ -10,7 +10,6 @@
   "author": "Drumstickz64",
   "license": "MIT",
   "dependencies": {
-    "coherentpdf": "^2.5.5",
-    "readline-sync": "^1.4.10"
+    "coherentpdf": "^2.5.5"
   }
 }
