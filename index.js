@@ -8,7 +8,7 @@ const OUT_FILE = "out.pdf";
 // Constants for configuring stacking behavior when dealing
 // with "PowerPoint" (pdfs with pages wider than they are tall)
 const STACKING_ENABLED = true;
-const STACKING_MARGIN = 40.0;
+const STACKING_MARGIN = 0.0;
 const STACKING_SPACING = 25.0;
 const STACKING_LINEHEIGHT = 2.0;
 
